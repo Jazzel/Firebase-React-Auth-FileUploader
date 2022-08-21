@@ -8,6 +8,8 @@ import {
 import { auth } from "./firebase";
 import { useHistory } from "react-router-dom";
 import { useAuthValue } from "./AuthContext";
+
+import home from "./assets/home.png";
 function Login() {
   const [email, setEmail] = useState("jazzelmehmood4@gmail.com");
   const [password, setPassword] = useState("Jazz1234");
@@ -28,7 +30,7 @@ function Login() {
             })
             .catch((err) => alert(err.message));
         } else {
-          history.push("/");
+          history.push("/profile");
           localStorage.setItem("verified", true);
         }
       })
@@ -37,6 +39,9 @@ function Login() {
   return (
     <div className="center">
       <div className="auth">
+        <Link to="/">
+          <img alt="homepage" src={home} width="50px" />
+        </Link>
         <h1>Log in</h1>
         {error && <div className="auth__error">{error}</div>}
         <form onSubmit={login} name="login_form">

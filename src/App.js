@@ -9,6 +9,8 @@ import { useState, useEffect } from "react";
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import PrivateRoute from "./PrivateRoute";
+import Welcome from "./Welcome";
+import Record from "./Record";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -23,8 +25,9 @@ function App() {
     <Router>
       <AuthProvider value={{ currentUser, timeActive, setTimeActive }}>
         <Switch>
-          <PrivateRoute exact path="/" component={Profile} />
-
+          <Route exact path="/" component={Welcome} />
+          <PrivateRoute exact path="/profile" component={Profile} />
+          <Route exact path="/record" component={Record} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/verify-email" component={VerifyEmail} />
