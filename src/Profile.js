@@ -136,7 +136,7 @@ function Profile() {
     }
   };
 
-  const analyze = ({ name, url }) => {
+  const analyze = async ({ name, url }) => {
     setLoader(true);
     console.log(name, url);
     // ... promise
@@ -260,6 +260,7 @@ function Profile() {
                       className="dummy"
                       onClick={() => {
                         openAnalyzeModal();
+                        setFile({ name, url });
                         analyze({ name, url });
                       }}
                     >
@@ -357,7 +358,17 @@ function Profile() {
               <div className="loader"></div>
             </div>
           ) : (
-            <Chart />
+            <>
+              <Chart />
+              <br />
+              {file && (
+                <ReactAudioPlayer
+                  src={file.url}
+                  controls
+                  style={{ width: "100%", margin: "auto" }}
+                />
+              )}
+            </>
           )}
         </div>
       </div>

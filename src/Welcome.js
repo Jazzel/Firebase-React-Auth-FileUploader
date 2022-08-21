@@ -14,6 +14,9 @@ function Welcome() {
         </Link>
         <h1>Welcome</h1>
         <div className="buttons">
+          <button className="dummy" onClick={() => history.push("/upload")}>
+            Upload Audio
+          </button>
           <button className="dummy" onClick={() => history.push("/record")}>
             Record Audio
           </button>

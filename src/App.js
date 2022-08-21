@@ -11,6 +11,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import PrivateRoute from "./PrivateRoute";
 import Welcome from "./Welcome";
 import Record from "./Record";
+import Upload from "./Upload";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -28,6 +29,7 @@ function App() {
           <Route exact path="/" component={Welcome} />
           <PrivateRoute exact path="/profile" component={Profile} />
           <Route exact path="/record" component={Record} />
+          <Route exact path="/upload" component={Upload} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/verify-email" component={VerifyEmail} />
