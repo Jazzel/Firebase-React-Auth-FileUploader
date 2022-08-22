@@ -110,8 +110,8 @@ function Profile() {
     if (!file) {
       alert("Please choose a file first!");
     } else {
-      const storagestorageRef = storageRef(storage, `${user}/${file.name}`);
-      const uploadTask = uploadBytesResumable(storagestorageRef, file);
+      const _storageRef = storageRef(storage, `${user}/${file.name}`);
+      const uploadTask = uploadBytesResumable(_storageRef, file);
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -125,8 +125,8 @@ function Profile() {
         (err) => console.log(err),
         () => {
           // download url
-          getDownloadURL(uploadTask.snapshot.storageRef).then((url) => {
-            setData((arr) => [...arr, url]);
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            setData((arr) => [...arr, { name: file.name, url }]);
             closeFileModal();
             setFile("");
             setPercent(0);
@@ -188,7 +188,7 @@ function Profile() {
     let audiostorageRef = storageRef(storage, url);
     deleteObject(audiostorageRef)
       .then(() => {
-        setData((arr) => arr.filter((item) => item !== url));
+        setData((arr) => arr.filter((item) => item.url !== url));
       })
       .catch((error) => {
         console.log(error.message);
@@ -339,9 +339,9 @@ function Profile() {
             </button>
             <br />
             {percent === 100 ? (
-              <p className="loader">Upload complete</p>
+              <p className="loader-text">Upload complete</p>
             ) : percent > 0 ? (
-              <p className="loader">{percent}% done</p>
+              <p className="loader-text">{percent}% done</p>
             ) : null}
             <br />
           </form>
