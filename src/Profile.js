@@ -147,8 +147,10 @@ function Profile() {
     }, 3000);
   };
 
-  const listItem = () => {
-    const storagestorageRef = storageRef(storage, `${user}/`);
+  const listItem = (callURL) => {
+    console.log(callURL);
+    const storagestorageRef = storageRef(storage, `${callURL}/`);
+    setUser(callURL);
 
     listAll(storagestorageRef)
       .then((res) => {
@@ -165,7 +167,6 @@ function Profile() {
 
   const listUsers = () => {
     const usersRef = databaseRef(database, "agents");
-    console.log(usersRef);
     onValue(
       usersRef,
       (snapshot) => {
@@ -193,6 +194,14 @@ function Profile() {
       .catch((error) => {
         console.log(error.message);
       });
+  };
+
+  const fetchAudios = (callURL) => {
+    setData([]);
+    // console.log(document.querySelector(""))
+    setUser(callURL);
+    openModal();
+    listItem(callURL);
   };
 
   return (
@@ -231,7 +240,10 @@ function Profile() {
             users
               .filter((_user) => _user.callURL === user)
               .map((_user) => (
-                <div style={{ display: "flex", justifyContent: "center" }}>
+                <div
+                  key={_user.id}
+                  style={{ display: "flex", justifyContent: "center" }}
+                >
                   <h3>
                     Agent: <b>{_user.name}</b> - AgentID: <b>{_user.id}</b>
                   </h3>
@@ -239,7 +251,7 @@ function Profile() {
               ))}
           {data.length > 0 ? (
             data.map(({ name, url, size }) => (
-              <>
+              <div key={url}>
                 <h2>File: {name}</h2>
                 <div className="row">
                   {url && (
@@ -280,7 +292,7 @@ function Profile() {
                   </button>
                   <button className="dummy">Analyze</button>
                 </div>
-              </>
+              </div>
             ))
           ) : (
             <>No audio files available</>
@@ -299,13 +311,10 @@ function Profile() {
               <div
                 key={id}
                 className="user-row"
-                onClick={() => {
-                  setData([]);
-                  setUser(callURL);
-                  openModal();
-                  listItem();
-                }}
+                data-value={callURL}
+                onClick={() => fetchAudios(callURL)}
               >
+                <input value={callURL} className="hidden" />
                 <div className="row">
                   <p>{name}</p>
                 </div>

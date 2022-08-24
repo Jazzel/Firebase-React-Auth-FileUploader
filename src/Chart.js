@@ -19,12 +19,13 @@ const Chart = () => {
         ]}
         label={({ x, y, dx, dy, dataEntry }) => (
           <text
+            key={dataEntry.title}
             x={x}
             y={y}
             dx={dx}
             dy={dy}
-            dominant-baseline="central"
-            text-anchor="middle"
+            dominantBaseline="central"
+            textAnchor="middle"
             style={{
               fontSize: "5px",
               fontFamily: "sans-serif",
